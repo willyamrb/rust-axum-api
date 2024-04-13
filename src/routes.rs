@@ -2,11 +2,17 @@ use crate::controllers::{
     body_json_test, body_test, custom_header_test, headers_test, index, pathvar_test, query_test,
 };
 use axum::{
+    http::Method,
     routing::{get, post},
     Router,
 };
+use tower_http::cors::{Any, CorsLayer};
 
 pub fn create_routes() -> Router {
+    let cors = CorsLayer::new()
+        .allow_methods([Method::POST, Method::GET])
+        .allow_origin(Any);
+
     Router::new()
         .route("/", get(index))
         .route("/body", post(body_test))
@@ -15,4 +21,5 @@ pub fn create_routes() -> Router {
         .route("/query", get(query_test))
         .route("/headers", get(headers_test))
         .route("/custom-headers", get(custom_header_test))
+        .layer(cors)
 }
