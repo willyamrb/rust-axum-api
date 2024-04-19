@@ -67,3 +67,16 @@ pub async fn get_json() -> Json<JsData> {
 
     Json(data)
 }
+
+#[derive(Deserialize)]
+pub struct Credentials {
+    username: Option<String>, //make it optional
+    password: String,         //make it required
+}
+
+pub async fn login(Json(credentials): Json<Credentials>) -> String {
+    format!(
+        "Welcome, {}!",
+        credentials.username.unwrap_or("User".to_string())
+    )
+}
