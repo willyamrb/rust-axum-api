@@ -1,6 +1,6 @@
 use axum::{
     extract::{Path, Query},
-    http::{HeaderMap, HeaderValue},
+    http::{HeaderMap, HeaderValue, StatusCode},
     Json,
 };
 use axum_extra::{headers::UserAgent, TypedHeader};
@@ -45,4 +45,8 @@ pub async fn custom_header_test(headers: HeaderMap) -> String {
     let custom_headers: &HeaderValue = headers.get("x-custom-header").unwrap();
     let data = custom_headers.to_str().unwrap().to_owned();
     data
+}
+
+pub async fn error_route() -> Result<(), StatusCode> {
+    Err(StatusCode::BAD_REQUEST)
 }

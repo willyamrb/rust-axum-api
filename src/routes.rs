@@ -1,5 +1,6 @@
 use crate::controllers::{
-    body_json_test, body_test, custom_header_test, headers_test, index, pathvar_test, query_test,
+    body_json_test, body_test, custom_header_test, error_route, headers_test, index, pathvar_test,
+    query_test,
 };
 use axum::{
     http::Method,
@@ -21,5 +22,6 @@ pub fn create_routes() -> Router {
         .route("/query", get(query_test))
         .route("/headers", get(headers_test))
         .route("/custom-headers", get(custom_header_test))
+        .route("/error", get(error_route))
         .layer(cors)
 }
