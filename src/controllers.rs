@@ -50,3 +50,20 @@ pub async fn custom_header_test(headers: HeaderMap) -> String {
 pub async fn error_route() -> Result<(), StatusCode> {
     Err(StatusCode::BAD_REQUEST)
 }
+
+#[derive(Serialize)]
+pub struct JsData {
+    message: String,
+    username: String,
+    count: i32,
+}
+
+pub async fn get_json() -> Json<JsData> {
+    let data: JsData = JsData {
+        message: "Hello, World!".to_string(),
+        username: "John Doe".to_string(),
+        count: 42,
+    };
+
+    Json(data)
+}
